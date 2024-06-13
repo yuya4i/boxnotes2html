@@ -10,8 +10,7 @@ This tool is available for both MAC and Windows with WSL1 or WSL2. If you use it
 1. Move to ```boxnote2converter```. (This souce code using alexwennerberg's [boxnotes2html](https://github.com/alexwennerberg/boxnotes2html))
 2. Setup the repo using poetry:
 ```shell
-python3 -m pip install poetry
-poetry install
+pip install -r requirements.txt
 ```
 
 
