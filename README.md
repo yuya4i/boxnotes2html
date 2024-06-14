@@ -15,9 +15,13 @@ pip install -r requirements.txt
 
 
 ## Usage
-
-```Shell
+Shell
+``` Shell
 ./convBoxNotes.sh <-h|-x>  <directory path where *.boxnotes are stored>
+```
+PowerShell (Windows)
+``` Powershell
+./convBoxNotes.ps1 <-h|-x>  <directory path where *.boxnotes are stored>
 ```
 
 automatically saved in ```<directory path where *.boxnotes are stored>/output/```
