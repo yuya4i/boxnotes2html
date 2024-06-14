@@ -75,22 +75,18 @@ class BoxNotesConverter:
             print("Invalid option. Use -h for HTML, -x for DOCX.")
             sys.exit(1)
 
-def main():
-    if len(sys.argv) not in [4]:
-        print('Usage: python convBoxNotes.py [-x|-h] <Box notes file name> <Output file name> ')
-        sys.exit(1)
-    
+def main():    
     option = sys.argv[1]
     input_file_path = sys.argv[2]
     output_file_path = sys.argv[3]
     token = None
     work_dir = "./output"
 
-    if len(sys.argv) >= 6:
-        if sys.argv[4] == '-t':
-            token = sys.argv[5]
-        if len(sys.argv) == 7 and sys.argv[6] == '-d':
-            work_dir = sys.argv[7]
+    # if len(sys.argv) >= 6:
+    #     if sys.argv[4] == '-t':
+    #         token = sys.argv[5]
+    #     if len(sys.argv) == 7 and sys.argv[6] == '-d':
+    #         work_dir = sys.argv[7]
 
     try:
         converter = BoxNotesConverter(option, input_file_path, output_file_path, token, work_dir)
