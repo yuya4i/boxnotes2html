@@ -32,7 +32,11 @@ class BoxNotesConverter:
 
     def convert_to_html(self):
         try:
-            with open(self.input_file_path, 'r') as f:
+            # print(self.option)
+            # print(self.input_file_path)
+            # print(self.output_file_path)
+            # print(self.work_dir)
+            with open(self.input_file_path, 'r', encoding="utf-8") as f:
                 boxnote_content = f.read()
             html_content = parse_html(boxnote_content, self.input_file_path.stem, self.work_dir, self.token)
             output_html_file = self.output_file_path.with_suffix('.html')
@@ -49,17 +53,17 @@ class BoxNotesConverter:
         except Exception as e:
             print(f"Failed to convert to DOCX: {e}")
 
-    # def convert_to_text(self):
-    #     try:
-    #         with open(self.input_file_path, 'r') as f:
-    #             boxnote_content = f.read()
-    #         text_content = boxnote_content  # This should be replaced with an actual text conversion function
-    #         output_text_file = self.output_file_path.with_suffix('.txt')
-    #         with open(output_text_file, 'w') as f:
-    #             f.write(text_content)
-    #         self.print_message(output_text_file, 'txt')
-    #     except Exception as e:
-    #         print(f"Failed to convert to text: {e}")
+    def convert_to_text(self):
+        try:
+            with open(self.input_file_path, 'r', encoding="utf-8") as f:
+                boxnote_content = f.read()
+            text_content = boxnote_content  # This should be replaced with an actual text conversion function
+            output_text_file = self.output_file_path.with_suffix('.txt')
+            with open(output_text_file, 'w') as f:
+                f.write(text_content)
+            self.print_message(output_text_file, 'txt')
+        except Exception as e:
+            print(f"Failed to convert to text: {e}")
 
     def print_message(self, output_file, extension):
         print(f"Converted to {extension}: {output_file}")
@@ -69,8 +73,8 @@ class BoxNotesConverter:
             self.convert_to_html()
         elif self.option == '-x':
             self.convert_to_docx()
-        # elif self.option == '-t':
-        #     self.convert_to_text()
+        elif self.option == '-t':
+            self.convert_to_text()
         else:
             print("Invalid option. Use -h for HTML, -x for DOCX.")
             sys.exit(1)

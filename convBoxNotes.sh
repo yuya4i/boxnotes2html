@@ -12,8 +12,8 @@ if [ "$#" -ne 2 ]; then
   exit 1
 fi
 
-type=$1
-inp_dir=$2
+type="$1"
+inp_dir="$2"
 output_dir="$inp_dir/output"
 
 # Check for valid conversion type
@@ -33,10 +33,12 @@ mkdir -p "$output_dir"
 
 # Convert all .boxnote files in the directory
 for file in "$inp_dir"/*.boxnote; do
+  [ -e "$file" ] || continue  # if no .boxnote files, continue to next iteration
+  echo "Converting \"$file\"..."
   filename=$(basename -- "$file" .boxnote)
   output_file="$output_dir/$filename"
   # Call the Python conversion script
-  python convBoxNotes.py $type "$file" "$output_file"
+  python convBoxNotes.py "$type" "$file" "$output_file"
   # Delete at the end because a temporary file is created
   # Delete only if type = -x
   if [ "$type" = "-x" ]; then
@@ -44,3 +46,4 @@ for file in "$inp_dir"/*.boxnote; do
   fi
 done
 
+ls "$output_dir"
