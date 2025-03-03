@@ -1,27 +1,67 @@
 # convBoxNotes
 
-It is difficult to search "Box notes documents" quickly.`convBoxNotes` is a tool to convert "Box notes documents" to html, markdown bulk process with `boxnotes2html` OSS.
+Box notesドキュメントを素早く検索することは困難です。`convBoxNotes`は、`boxnotes2html` OSSを使用してBox notesドキュメントをHTML、DOCX、またはテキスト形式に一括変換するツールです。
 
-## Installation
+## 特徴
 
-This tool is available for both MAC and Windows with WSL1 or WSL2. If you use it on Windows, you need to install WSL1 or WSL2 in order to use shell(bash).
+- Box notesファイル（.boxnote）をHTML、DOCX、またはテキスト形式に変換
+- ディレクトリ内のすべてのBox notesファイルを一括処理
+- シンプルなコマンドラインインターフェース
+- Windows（PowerShell）とMac/Linux（Bash）の両方に対応
 
-0. Python 3 is required.
-1. Move to ```boxnote2converter```. (This souce code using alexwennerberg's [boxnotes2html](https://github.com/alexwennerberg/boxnotes2html))
-2. Setup the repo using poetry:
+## インストール
+
+このツールはMacとWindows（WSL1またはWSL2使用）の両方で利用可能です。Windowsで使用する場合は、シェル（bash）を使用するためにWSL1またはWSL2をインストールする必要があります。
+
+0. Python 3が必要です。
+1. ```boxnote2converter```ディレクトリに移動します。（このソースコードはalexwennerbergの[boxnotes2html](https://github.com/alexwennerberg/boxnotes2html)を使用しています）
+2. 以下のコマンドでリポジトリをセットアップします：
 ```shell
 pip install -r requirements.txt
 ```
 
+## 依存関係
 
-## Usage
-Shell
-``` Shell
-./convBoxNotes.sh <-h|-x>  <directory path where *.boxnotes are stored>
-```
-PowerShell (Windows)
-``` Powershell
-./convBoxNotes.ps1 <-h|-x>  <directory path where *.boxnotes are stored>
+- python-docx==0.8.11
+- beautifulsoup4==4.12.2
+- requests==2.32.3
+
+## 使用方法
+
+### Bash (Mac/Linux)
+```shell
+./convBoxNotes.sh <-h|-x|-t> <*.boxnotesが保存されているディレクトリパス>
 ```
 
-automatically saved in ```<directory path where *.boxnotes are stored>/output/```
+### PowerShell (Windows)
+```powershell
+./convBoxNotes.ps1 <-h|-x|-t> <*.boxnotesが保存されているディレクトリパス>
+```
+
+### オプション
+- `-h`: HTMLに変換
+- `-x`: DOCXに変換
+- `-t`: テキストに変換
+
+変換されたファイルは自動的に `<*.boxnotesが保存されているディレクトリパス>/output/` に保存されます。
+
+## 例
+
+```shell
+# ディレクトリ内のすべてのboxnoteファイルをHTMLに変換
+./convBoxNotes.sh -h /path/to/boxnotes
+
+# ディレクトリ内のすべてのboxnoteファイルをDOCXに変換
+./convBoxNotes.sh -x /path/to/boxnotes
+
+# ディレクトリ内のすべてのboxnoteファイルをテキストに変換
+./convBoxNotes.sh -t /path/to/boxnotes
+```
+
+## ライセンス
+
+このプロジェクトはMITライセンスの下で公開されています。詳細については、boxnote2converterディレクトリ内のLICENSEファイルを参照してください。
+
+## 謝辞
+
+このツールは[alexwennerberg/boxnotes2html](https://github.com/alexwennerberg/boxnotes2html)をベースにしています。
