@@ -1,103 +1,67 @@
-# boxnotes2html
+# convBoxNotes
 
-boxnotes2html is a tool to convert Box Notes to html, markdown or plain text
+Box notesドキュメントを素早く検索することは困難です。`convBoxNotes`は、`boxnotes2html` OSSを使用してBox notesドキュメントをHTML、DOCX、またはテキスト形式に一括変換するツールです。
 
-**NOTE: Due to changes in the Box Note format, this only works with Box Notes
-created before August 2022. See [this
-issue](https://github.com/alexwennerberg/boxnotes2html/issues/3)**
+## 特徴
 
-**Also note: This is a script I wrote several years ago. I do not use it
-actively. You are happy to use it, and I appreciate emails and can answer questions, but 
-I am unlikely to field feature requests for free**
+- Box notesファイル（.boxnote）をHTML、DOCX、またはテキスト形式に変換
+- ディレクトリ内のすべてのBox notesファイルを一括処理
+- シンプルなコマンドラインインターフェース
+- Windows（PowerShell）とMac/Linux（Bash）の両方に対応
 
-![before](img/before.png)
+## インストール
 
-*to*
+このツールはMacとWindows（WSL1またはWSL2使用）の両方で利用可能です。Windowsで使用する場合は、シェル（bash）を使用するためにWSL1またはWSL2をインストールする必要があります。
 
-![after](img/after.png)
-
-If you or your institution got value out of this script, please consider making
-a [donation](https://www.patreon.com/alexwennerberg)! I created and
-maintain this script for free in my free time.
-
-## Rationale
-
-Box Notes are a proprietary, undocumented format, which makes them difficult to
-export or move to another service. According to this [support
-ticket](https://community.box.com/t5/Desktop-and-Mobile-Forum/Exporting-Box-Notes/td-p/14834)
-the official way in which they meet GDPR compliance is through allowing users
-to print the notes page as a PDF when it's open in a web browser.  Another
-option is to Copy/paste the document into LibreOffice, Google Docs, Microsoft
-Word or some other text-editing program. Neither of these are very attractive
-options when exporting a large number of Box Notes, say, for archival/backup
-purposes or in the process of migrating to another platform.
-
-
-## Installation
-
-No external dependencies required! Just the good old Python standard library.
-
-Use `pip install boxnotes2html` to install.
-
-To install from source:
-
-```
-git clone https://github.com/alexwennerberg/boxnotes2html
-pip install .
+0. Python 3が必要です。
+1. ```boxnote2converter```ディレクトリに移動します。（このソースコードはalexwennerbergの[boxnotes2html](https://github.com/alexwennerberg/boxnotes2html)を使用しています）
+2. 以下のコマンドでリポジトリをセットアップします：
+```shell
+pip install -r requirements.txt
 ```
 
-Requires Python 3. Tested on >=3.5
+## 依存関係
 
-## Usage
+- python-docx==0.8.11
+- beautifulsoup4==4.12.2
+- requests==2.32.3
 
-`boxnotes2html -h` for help and options.
+## 使用方法
 
-To convert a file:
-
-`boxnotes2html mynote.boxnote`
-
-Will create a file called mynote. You can optionally specify the filetype with `-f`, current options, in order to most to least reliable, html, md (markdown), and txt (plaintext)
-
-You can specify one or more options. If any of the options are a directory, boxnotes2html will convert those notes and put the new file next to it in the directory path.
-
-Box doesn't allow for you to download individual Box notes from the UI, but you can put them into a folder and download that folder, or use the API.
-
-You can also use boxnotes2html as an imported library:
-
-```python
-from boxnotes2html import BoxNote
-
-# From string
-note = BoxNote("boxnote_file_content_string")
-# Or from file
-note = BoxNote.from_file("filename.boxnote")
-
-note.as_html() # returns an html string
-note.as_markdown() # returns a markdown string
-note.as_text() # returns raw text
+### Bash (Mac/Linux)
+```shell
+./convBoxNotes.sh <-h|-x|-t> <*.boxnotesが保存されているディレクトリパス>
 ```
 
-The HTML formatted by this tool is pretty ugly -- that may not be important for a lot of cases, but you may want to use [tidy](http://www.html-tidy.org/) or another tool to clean it up. You can also use [pandoc](https://pandoc.org/) to convert from html to another format, such as PDFs, markdown, microsoft word, and so on. I haven't tested all these tools, so I can't vouch for their effectiveness.
+### PowerShell (Windows)
+```powershell
+./convBoxNotes.ps1 <-h|-x|-t> <*.boxnotesが保存されているディレクトリパス>
+```
 
+### オプション
+- `-h`: HTMLに変換
+- `-x`: DOCXに変換
+- `-t`: テキストに変換
 
-Functioning:
-* Text formatting (bold, underline, colors, size, etc)
-* Hyperlinks
-* Ordered, unordered, checked and unchecked lists are supported in Markdown (using Github flavoured check/uncheck syntax).
-* Tables in Markdown
+変換されたファイルは自動的に `<*.boxnotesが保存されているディレクトリパス>/output/` に保存されます。
 
-Caveats:
-* HTML lists don't supported nesting
-* HTML tables are broken however it should be possible to take the approach used for Markdown and apply it - PRs welcome.
-* Images are just a link to the image in Box, converting them would require API access.
-* Comments and annotations are not saved.
-* Document history is not preserved
-* This tool is in ALPHA, bugs may exist. Please report any issues you encounter!
-* Links to other Box notes are not changed in any way
+## 例
 
-If this tool is unsatisfactory to your needs, please contact Box and tell them to build this much-needed feature!
+```shell
+# ディレクトリ内のすべてのboxnoteファイルをHTMLに変換
+./convBoxNotes.sh -h /path/to/boxnotes
 
+# ディレクトリ内のすべてのboxnoteファイルをDOCXに変換
+./convBoxNotes.sh -x /path/to/boxnotes
 
-## Feedback
+# ディレクトリ内のすべてのboxnoteファイルをテキストに変換
+./convBoxNotes.sh -t /path/to/boxnotes
+```
 
-Feel free to open an issue or email me with any questions or feedback: alex@alexwennerberg.com If you use this library, I would love to know what your experience is, positive or negative. I do maintain this, so feel free to make feature requests or bug reports. Thanks, and enjoy!
+## ライセンス
+
+このプロジェクトはMITライセンスの下で公開されています。詳細については、boxnote2converterディレクトリ内のLICENSEファイルを参照してください。
+
+## 謝辞
+
+このツールは[alexwennerberg/boxnotes2html](https://github.com/alexwennerberg/boxnotes2html)をベースにしています。
