@@ -58,10 +58,6 @@ pip install -r requirements.txt
 ./convBoxNotes.sh -t /path/to/boxnotes
 ```
 
-## ライセンス
-
-このプロジェクトはMITライセンスの下で公開されています。詳細については、boxnote2converterディレクトリ内のLICENSEファイルを参照してください。
-
 ## 謝辞
 
 このツールは[alexwennerberg/boxnotes2html](https://github.com/alexwennerberg/boxnotes2html)をベースにしています。
